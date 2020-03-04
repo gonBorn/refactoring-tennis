@@ -3,36 +3,46 @@ package cn.xpbootcamp.tennis.game3;
 import cn.xpbootcamp.tennis.TennisGame;
 
 public class TennisGame3 implements TennisGame {
+    private int ponit1;
+    private int point2;
+    private String playerName1;
+    private String playerName2;
 
-    private int p2;
-    private int p1;
-    private String p1N;
-    private String p2N;
-
-    public TennisGame3(String p1N, String p2N) {
-        this.p1N = p1N;
-        this.p2N = p2N;
+    public TennisGame3(String playerName1, String playerName2) {
+        this.playerName1 = playerName1;
+        this.playerName2 = playerName2;
     }
 
+    @Override
     public String getScore() {
-        String s;
-        if (p1 < 4 && p2 < 4 && !(p1 + p2 == 6)) {
-            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-            s = p[p1];
-            return (p1 == p2) ? s + "-All" : s + "-" + p[p2];
+        if (isRegularScore()) {
+            String[] pointType = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+            return (isDeuce()) ? pointType[ponit1] + "-All" : pointType[ponit1] + "-" + pointType[point2];
         } else {
-            if (p1 == p2)
-                return "Deuce";
-            s = p1 > p2 ? p1N : p2N;
-            return ((p1-p2)*(p1-p2) == 1) ? "Advantage " + s : "Win for " + s;
+            return isDeuce() ? "Deuce" : getAdvantageOrWin();
         }
     }
 
+    private boolean isRegularScore() {
+        return ponit1 < 4 && point2 < 4 && ponit1+point2 != 6;
+    }
+
+    private boolean isDeuce() {
+        return ponit1 == point2;
+    }
+
+    private String getAdvantageOrWin() {
+        String score = ponit1 > point2 ? playerName1 : playerName2;
+        return ((ponit1 - point2) * (ponit1 - point2) == 1) ? "Advantage " + score : "Win for " + score;
+    }
+
+    @Override
     public void wonPoint(String playerName) {
-        if (playerName == "player1")
-            this.p1 += 1;
-        else
-            this.p2 += 1;
+        if (playerName.equals(this.playerName1)) {
+            this.ponit1 += 1;
+        } else {
+            this.point2 += 1;
+        }
 
     }
 
