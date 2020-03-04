@@ -41,18 +41,7 @@ public class TennisGame1 implements TennisGame {
     }
 
     private String getRegularResult() {
-        int tempScore;
-        String score = "";
-        for (int i = 1; i < 3; i++) {
-            if (i == 1) {
-                tempScore = player1.getScore();
-            } else {
-                score += "-";
-                tempScore = player2.getScore();
-            }
-            score += Score.create(tempScore).getScore();
-        }
-        return score;
+        return Score.create(player1.getScore()).getScore() + "-" + Score.create(player2.getScore()).getScore();
     }
 
     private String getMinusResult() {
