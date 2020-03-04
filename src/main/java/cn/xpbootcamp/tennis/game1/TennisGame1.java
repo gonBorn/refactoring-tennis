@@ -3,28 +3,27 @@ package cn.xpbootcamp.tennis.game1;
 import cn.xpbootcamp.tennis.TennisGame;
 
 public class TennisGame1 implements TennisGame {
-
-    private int mScore1 = 0;
-    private int mScore2 = 0;
-    private String player1Name;
-    private String player2Name;
+    private Player player1;
+    private Player player2;
 
     public TennisGame1(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        this.player1 = new Player(player1Name, 0);
+        this.player2 = new Player(player2Name, 0);
     }
 
     @Override
     public void wonPoint(String playerName) {
-        if ("player1".equals(playerName)) {
-            mScore1 += 1;
-        } else {
-            mScore2 += 1;
-        }
+        getWinner(playerName).plusPoint4Player();
+    }
+
+    private Player getWinner(String playerName) {
+        return playerName.equals(player1.getPlayerName()) ? player1 : player2;
     }
 
     @Override
     public String getScore() {
+        int mScore1 = player1.getScore();
+        int mScore2 = player2.getScore();
         String score = "";
         int tempScore = 0;
         if (mScore1 == mScore2) {
