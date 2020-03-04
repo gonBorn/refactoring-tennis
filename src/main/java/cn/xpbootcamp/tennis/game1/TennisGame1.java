@@ -16,39 +16,48 @@ public class TennisGame1 implements TennisGame {
         getWinner(playerName).plusPoint4Player();
     }
 
+    @Override
+    public String getScore() {
+        if (isDeduce()) {
+            return Score.create(player1.getScore()).getDeuce();
+        }
+        if (isBothScoreBeyond4()) {
+            return getMinusResult();
+        }
+
+        return getRegularResult();
+    }
+
     private Player getWinner(String playerName) {
         return playerName.equals(player1.getPlayerName()) ? player1 : player2;
     }
 
-    @Override
-    public String getScore() {
-        int mScore1 = player1.getScore();
-        int mScore2 = player2.getScore();
-        String score = "";
-        int tempScore = 0;
-        if (mScore1 == mScore2) {
-            return Score.create(mScore1).getDeuce();
-        }
-        if (mScore1 >= 4 || mScore2 >= 4) {
-            return getMinusResult(mScore1, mScore2);
-        }
+    private boolean isBothScoreBeyond4() {
+        return player1.getScore() >= 4 || player2.getScore() >= 4;
+    }
 
+    private boolean isDeduce() {
+        return player1.getScore() == player2.getScore();
+    }
+
+    private String getRegularResult() {
+        int tempScore;
+        String score = "";
         for (int i = 1; i < 3; i++) {
             if (i == 1) {
-                tempScore = mScore1;
+                tempScore = player1.getScore();
             } else {
                 score += "-";
-                tempScore = mScore2;
+                tempScore = player2.getScore();
             }
             score += Score.create(tempScore).getScore();
         }
-
         return score;
     }
 
-    private String getMinusResult(int mScore1, int mScore2) {
-        return (Math.abs(mScore1 - mScore2) == 1) ?
-          ((mScore1 > mScore2) ? "Advantage player1" : "Advantage player2") :
-          ((mScore1 > mScore2) ? "Win for player1" : "Win for player2");
+    private String getMinusResult() {
+        return (Math.abs(player1.getScore() - player2.getScore()) == 1) ?
+          ((player1.getScore() > player2.getScore()) ? "Advantage player1" : "Advantage player2") :
+          ((player1.getScore() > player2.getScore()) ? "Win for player1" : "Win for player2");
     }
 }
