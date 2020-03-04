@@ -6,9 +6,9 @@ import cn.xpbootcamp.tennis.game1.Scores.Love;
 import cn.xpbootcamp.tennis.game1.Scores.Thirty;
 
 public class Score {
-    public static final int LOVE = 0;
-    public static final int FIFTEEN = 1;
-    public static final int THIRTY = 2;
+    private static final int LOVE = 0;
+    private static final int FIFTEEN = 1;
+    private static final int THIRTY = 2;
 
     public static Score create(int type) {
         switch (type) {

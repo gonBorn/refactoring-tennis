@@ -29,16 +29,7 @@ public class TennisGame1 implements TennisGame {
         if (mScore1 == mScore2) {
             score = Score.create(mScore1).getDeuce();
         } else if (mScore1 >= 4 || mScore2 >= 4) {
-            int minusResult = mScore1 - mScore2;
-            if (minusResult == 1) {
-                score = "Advantage player1";
-            } else if (minusResult == -1) {
-                score = "Advantage player2";
-            } else if (minusResult >= 2) {
-                score = "Win for player1";
-            } else {
-                score = "Win for player2";
-            }
+            score = getMinusResult(mScore1, mScore2);
         } else {
             for (int i = 1; i < 3; i++) {
                 if (i == 1) {
@@ -51,5 +42,11 @@ public class TennisGame1 implements TennisGame {
             }
         }
         return score;
+    }
+
+    private String getMinusResult(int mScore1, int mScore2) {
+        return (Math.abs(mScore1 - mScore2) == 1) ?
+          ((mScore1 > mScore2) ? "Advantage player1" : "Advantage player2") :
+          ((mScore1 > mScore2) ? "Win for player1" : "Win for player2");
     }
 }
