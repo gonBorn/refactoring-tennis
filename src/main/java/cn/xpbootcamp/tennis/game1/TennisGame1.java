@@ -27,20 +27,22 @@ public class TennisGame1 implements TennisGame {
         String score = "";
         int tempScore = 0;
         if (mScore1 == mScore2) {
-            score = Score.create(mScore1).getDeuce();
-        } else if (mScore1 >= 4 || mScore2 >= 4) {
-            score = getMinusResult(mScore1, mScore2);
-        } else {
-            for (int i = 1; i < 3; i++) {
-                if (i == 1) {
-                    tempScore = mScore1;
-                } else {
-                    score += "-";
-                    tempScore = mScore2;
-                }
-                score += Score.create(tempScore).getScore();
-            }
+            return Score.create(mScore1).getDeuce();
         }
+        if (mScore1 >= 4 || mScore2 >= 4) {
+            return getMinusResult(mScore1, mScore2);
+        }
+
+        for (int i = 1; i < 3; i++) {
+            if (i == 1) {
+                tempScore = mScore1;
+            } else {
+                score += "-";
+                tempScore = mScore2;
+            }
+            score += Score.create(tempScore).getScore();
+        }
+
         return score;
     }
 
